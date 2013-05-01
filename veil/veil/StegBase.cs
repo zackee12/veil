@@ -7,27 +7,27 @@ namespace veil
 {
     abstract class StegBase:IDisposable
     {
+
+        #region MustInherit
         // try to get the encoded file and return whether the function was successful or not
         abstract public bool extractEncodedFile(string filepath);
-        
+
         // create the encoded file with the given filename embedded inside
         abstract public bool createEncodedFile(string filenameHide, string filenameOutput);
-        
+
         // get the total number of bytes that the object has available for storing data
         abstract public long getNumBytes();
-        
+
         // get the maximum size that can be stored in teh object
         abstract public long maxHiddenFileSize();
-        
-        public bool canFitFile(string filename)
-        {
-            // determine if the selected file can be hidden in the image
-            if (!File.Exists(filename)) return false;
-            FileInfo fi = new FileInfo(filename);
-            if (fi.Length > maxHiddenFileSize()) return false;
-            return true;
-        }
 
+        public virtual void Dispose()
+        {
+            // do nothing   
+        }
+        #endregion
+
+        #region Conversions
         protected byte[] integerToByteArray(int val)
         {
             // convert integer to a byte array
@@ -42,6 +42,17 @@ namespace veil
             if (b.Length != sizeof(int)) throw new ArgumentException(String.Format("The byte array size was not correct for type integer.  Passed {0} bytes", b.Length));
             if (BitConverter.IsLittleEndian) Array.Reverse(b);
             return BitConverter.ToInt32(b, 0);
+        }
+        #endregion
+
+        #region Validations
+        public bool canFitFile(string filename)
+        {
+            // determine if the selected file can be hidden in the image
+            if (!File.Exists(filename)) return false;
+            FileInfo fi = new FileInfo(filename);
+            if (fi.Length > maxHiddenFileSize()) return false;
+            return true;
         }
 
         protected bool isByteOdd(byte b)
@@ -75,10 +86,7 @@ namespace veil
             if (filepath.Substring(filepath.Length - 1).Equals(@"\") || filepath.Substring(filepath.Length - 1).Equals(@"/")) filepath = filepath.Substring(0, filepath.Length - 1);
             return filepath;
         }
+        #endregion
 
-        public virtual void Dispose()
-        {
-            // do nothing   
-        }
     }
 }

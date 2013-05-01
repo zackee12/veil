@@ -51,22 +51,22 @@
             this.buttonBrowseEncodeIn = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxEncodeEmbed = new System.Windows.Forms.TextBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabelFileSize = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonDecode
             // 
-            this.buttonDecode.Location = new System.Drawing.Point(219, 97);
+            this.buttonDecode.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.buttonDecode.Location = new System.Drawing.Point(377, 97);
             this.buttonDecode.Name = "buttonDecode";
             this.buttonDecode.Size = new System.Drawing.Size(75, 23);
             this.buttonDecode.TabIndex = 0;
             this.buttonDecode.Text = "Decode File";
-            this.buttonDecode.UseVisualStyleBackColor = true;
+            this.buttonDecode.UseVisualStyleBackColor = false;
             this.buttonDecode.Click += new System.EventHandler(this.buttonDecode_Click);
             // 
             // groupBox1
@@ -82,7 +82,8 @@
             this.groupBox1.Controls.Add(this.buttonDecode);
             this.groupBox1.Location = new System.Drawing.Point(12, 27);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(300, 140);
+            this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.groupBox1.Size = new System.Drawing.Size(458, 140);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Decode File";
@@ -109,12 +110,13 @@
             // 
             this.textBoxDecodePass.Location = new System.Drawing.Point(6, 97);
             this.textBoxDecodePass.Name = "textBoxDecodePass";
-            this.textBoxDecodePass.Size = new System.Drawing.Size(207, 20);
+            this.textBoxDecodePass.Size = new System.Drawing.Size(365, 20);
             this.textBoxDecodePass.TabIndex = 16;
+            this.textBoxDecodePass.TextChanged += new System.EventHandler(this.validateDecodeButton);
             // 
             // buttonBrowseDecodeOut
             // 
-            this.buttonBrowseDecodeOut.Location = new System.Drawing.Point(219, 58);
+            this.buttonBrowseDecodeOut.Location = new System.Drawing.Point(377, 58);
             this.buttonBrowseDecodeOut.Name = "buttonBrowseDecodeOut";
             this.buttonBrowseDecodeOut.Size = new System.Drawing.Size(75, 23);
             this.buttonBrowseDecodeOut.TabIndex = 5;
@@ -135,19 +137,23 @@
             // 
             this.textBoxDecodeOut.Location = new System.Drawing.Point(6, 58);
             this.textBoxDecodeOut.Name = "textBoxDecodeOut";
-            this.textBoxDecodeOut.Size = new System.Drawing.Size(207, 20);
+            this.textBoxDecodeOut.ReadOnly = true;
+            this.textBoxDecodeOut.Size = new System.Drawing.Size(365, 20);
             this.textBoxDecodeOut.TabIndex = 3;
+            this.textBoxDecodeOut.TextChanged += new System.EventHandler(this.validateDecodeButton);
             // 
             // textBoxDecodeIn
             // 
             this.textBoxDecodeIn.Location = new System.Drawing.Point(6, 19);
             this.textBoxDecodeIn.Name = "textBoxDecodeIn";
-            this.textBoxDecodeIn.Size = new System.Drawing.Size(207, 20);
+            this.textBoxDecodeIn.ReadOnly = true;
+            this.textBoxDecodeIn.Size = new System.Drawing.Size(365, 20);
             this.textBoxDecodeIn.TabIndex = 2;
+            this.textBoxDecodeIn.TextChanged += new System.EventHandler(this.validateDecodeButton);
             // 
             // buttonBrowseDecodeIn
             // 
-            this.buttonBrowseDecodeIn.Location = new System.Drawing.Point(219, 19);
+            this.buttonBrowseDecodeIn.Location = new System.Drawing.Point(377, 19);
             this.buttonBrowseDecodeIn.Name = "buttonBrowseDecodeIn";
             this.buttonBrowseDecodeIn.Size = new System.Drawing.Size(75, 23);
             this.buttonBrowseDecodeIn.TabIndex = 1;
@@ -169,27 +175,29 @@
             this.groupBox2.Controls.Add(this.buttonBrowseEncodeIn);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.textBoxEncodeEmbed);
-            this.groupBox2.Location = new System.Drawing.Point(12, 197);
+            this.groupBox2.Location = new System.Drawing.Point(12, 173);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(300, 185);
+            this.groupBox2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.groupBox2.Size = new System.Drawing.Size(458, 175);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Encode File";
             // 
             // buttonEncode
             // 
-            this.buttonEncode.Location = new System.Drawing.Point(219, 133);
+            this.buttonEncode.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.buttonEncode.Location = new System.Drawing.Point(377, 130);
             this.buttonEncode.Name = "buttonEncode";
             this.buttonEncode.Size = new System.Drawing.Size(75, 23);
             this.buttonEncode.TabIndex = 18;
             this.buttonEncode.Text = "Encode File";
-            this.buttonEncode.UseVisualStyleBackColor = true;
+            this.buttonEncode.UseVisualStyleBackColor = false;
             this.buttonEncode.Click += new System.EventHandler(this.buttonEncode_Click);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 159);
+            this.label7.Location = new System.Drawing.Point(6, 153);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(53, 13);
             this.label7.TabIndex = 19;
@@ -198,7 +206,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 120);
+            this.label5.Location = new System.Drawing.Point(4, 114);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(58, 13);
             this.label5.TabIndex = 15;
@@ -206,14 +214,15 @@
             // 
             // textBoxEncodePass
             // 
-            this.textBoxEncodePass.Location = new System.Drawing.Point(6, 136);
+            this.textBoxEncodePass.Location = new System.Drawing.Point(6, 130);
             this.textBoxEncodePass.Name = "textBoxEncodePass";
-            this.textBoxEncodePass.Size = new System.Drawing.Size(207, 20);
+            this.textBoxEncodePass.Size = new System.Drawing.Size(365, 20);
             this.textBoxEncodePass.TabIndex = 18;
+            this.textBoxEncodePass.TextChanged += new System.EventHandler(this.validateEncodeButton);
             // 
             // buttonBrowseEncodeOut
             // 
-            this.buttonBrowseEncodeOut.Location = new System.Drawing.Point(219, 97);
+            this.buttonBrowseEncodeOut.Location = new System.Drawing.Point(377, 94);
             this.buttonBrowseEncodeOut.Name = "buttonBrowseEncodeOut";
             this.buttonBrowseEncodeOut.Size = new System.Drawing.Size(75, 23);
             this.buttonBrowseEncodeOut.TabIndex = 14;
@@ -223,15 +232,17 @@
             // 
             // textBoxEncodeOut
             // 
-            this.textBoxEncodeOut.Location = new System.Drawing.Point(6, 97);
+            this.textBoxEncodeOut.Location = new System.Drawing.Point(6, 94);
             this.textBoxEncodeOut.Name = "textBoxEncodeOut";
-            this.textBoxEncodeOut.Size = new System.Drawing.Size(207, 20);
+            this.textBoxEncodeOut.ReadOnly = true;
+            this.textBoxEncodeOut.Size = new System.Drawing.Size(365, 20);
             this.textBoxEncodeOut.TabIndex = 13;
+            this.textBoxEncodeOut.TextChanged += new System.EventHandler(this.validateEncodeButton);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 81);
+            this.label3.Location = new System.Drawing.Point(4, 78);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 13);
             this.label3.TabIndex = 12;
@@ -239,14 +250,16 @@
             // 
             // textBoxEncodeIn
             // 
-            this.textBoxEncodeIn.Location = new System.Drawing.Point(6, 19);
+            this.textBoxEncodeIn.Location = new System.Drawing.Point(6, 16);
             this.textBoxEncodeIn.Name = "textBoxEncodeIn";
-            this.textBoxEncodeIn.Size = new System.Drawing.Size(207, 20);
+            this.textBoxEncodeIn.ReadOnly = true;
+            this.textBoxEncodeIn.Size = new System.Drawing.Size(365, 20);
             this.textBoxEncodeIn.TabIndex = 8;
+            this.textBoxEncodeIn.TextChanged += new System.EventHandler(this.validateEncodeButton);
             // 
             // buttonBrowseEncodeEmbed
             // 
-            this.buttonBrowseEncodeEmbed.Location = new System.Drawing.Point(219, 58);
+            this.buttonBrowseEncodeEmbed.Location = new System.Drawing.Point(377, 55);
             this.buttonBrowseEncodeEmbed.Name = "buttonBrowseEncodeEmbed";
             this.buttonBrowseEncodeEmbed.Size = new System.Drawing.Size(75, 23);
             this.buttonBrowseEncodeEmbed.TabIndex = 11;
@@ -256,7 +269,7 @@
             // 
             // buttonBrowseEncodeIn
             // 
-            this.buttonBrowseEncodeIn.Location = new System.Drawing.Point(219, 19);
+            this.buttonBrowseEncodeIn.Location = new System.Drawing.Point(377, 16);
             this.buttonBrowseEncodeIn.Name = "buttonBrowseEncodeIn";
             this.buttonBrowseEncodeIn.Size = new System.Drawing.Size(75, 23);
             this.buttonBrowseEncodeIn.TabIndex = 7;
@@ -267,7 +280,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(4, 42);
+            this.label4.Location = new System.Drawing.Point(4, 39);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(50, 13);
             this.label4.TabIndex = 10;
@@ -275,45 +288,39 @@
             // 
             // textBoxEncodeEmbed
             // 
-            this.textBoxEncodeEmbed.Location = new System.Drawing.Point(6, 58);
+            this.textBoxEncodeEmbed.Location = new System.Drawing.Point(6, 55);
             this.textBoxEncodeEmbed.Name = "textBoxEncodeEmbed";
-            this.textBoxEncodeEmbed.Size = new System.Drawing.Size(207, 20);
+            this.textBoxEncodeEmbed.ReadOnly = true;
+            this.textBoxEncodeEmbed.Size = new System.Drawing.Size(365, 20);
             this.textBoxEncodeEmbed.TabIndex = 9;
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(684, 24);
-            this.menuStrip1.TabIndex = 3;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.textBoxEncodeEmbed.TextChanged += new System.EventHandler(this.validateEncodeButton);
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 400);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabelFileSize});
+            this.statusStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.statusStrip1.Location = new System.Drawing.Point(0, 360);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(684, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(482, 20);
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabelFileSize
+            // 
+            this.toolStripStatusLabelFileSize.AutoToolTip = true;
+            this.toolStripStatusLabelFileSize.Name = "toolStripStatusLabelFileSize";
+            this.toolStripStatusLabelFileSize.Size = new System.Drawing.Size(301, 15);
+            this.toolStripStatusLabelFileSize.Text = "Max Embedded Size:  N/A kb  |  Embedded Size:  N/A kb";
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(684, 422);
+            this.ClientSize = new System.Drawing.Size(482, 380);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.Text = "FormMain";
             this.Load += new System.EventHandler(this.FormMain_Load);
@@ -321,8 +328,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -333,8 +340,6 @@
         private System.Windows.Forms.Button buttonDecode;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonBrowseDecodeOut;
@@ -356,6 +361,7 @@
         private System.Windows.Forms.TextBox textBoxEncodePass;
         private System.Windows.Forms.Button buttonBrowseEncodeOut;
         private System.Windows.Forms.TextBox textBoxEncodeOut;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelFileSize;
     }
 }
 

@@ -11,15 +11,20 @@ namespace veil
 {
     class StegBitmap : StegBase
     {
+
+        #region GlobalVariables
         private const int HEADER_SIZE = 20; // size of the hidden header
         private Bitmap bmp; // image to hide and extract files from
-        
+        #endregion
 
+        #region Constructors
         public StegBitmap(string filename)
         {
             bmp = new Bitmap(filename);
         }
+        #endregion
 
+        #region ReadWrite
         public override bool extractEncodedFile(string filepath)
         {
             // update the filepath to ensure it is exists
@@ -221,6 +226,7 @@ namespace veil
                 return true;
             }
         }
+        #endregion
 
         public override void Dispose()
         {
@@ -239,19 +245,6 @@ namespace veil
             // return the largest file size you can embed
             return (getNumBytes() - HEADER_SIZE) / 8;
         }
-
-
-
-
-
-        
-
-        
-        
-
-
-
-
 
         private void saveImage(string filename)
         {
@@ -299,9 +292,5 @@ namespace veil
                     throw new NotImplementedException();
             }
         }
-
-        
-
-
     }
 }

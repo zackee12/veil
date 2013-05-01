@@ -14,14 +14,30 @@ namespace veil
 {
     public partial class FormMain : Form
     {
-        StegBase stegImage;
+
+        #region GlobalVariables
+            StegBase stegImage;
+        #endregion
+
+        #region Contructors
         public FormMain()
         {
             InitializeComponent();
         }
+        #endregion
 
+        #region FormEvents
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+            // set the default path to store any created files
+            textBoxDecodeOut.Text = Directory.GetCurrentDirectory();
+            buttonDecode.Enabled = false;
+            buttonEncode.Enabled = false;
+            toolStripStatusLabelFileSize.Text = " ";
+        }
+        #endregion
 
-
+        #region ButtonEvents
         private void buttonBrowseDecodeIn_Click(object sender, EventArgs e)
         {
             // only lossless image formats
@@ -57,25 +73,23 @@ namespace veil
             stegImage.Dispose();
             textBoxDecodeIn.Text = "";
             textBoxDecodePass.Text = "";
-
-        }
-
-        private void FormMain_Load(object sender, EventArgs e)
-        {
-            // set the default path to store any created files
-            textBoxDecodeOut.Text = Directory.GetCurrentDirectory();
+            toolStripStatusLabelFileSize.Text = " ";
         }
 
         private void buttonBrowseEncodeIn_Click(object sender, EventArgs e)
         {
             // set the path to read in a cover image
             textBoxEncodeIn.Text = openFile(getImageFileFilter(), Directory.GetCurrentDirectory());
+            if (textBoxEncodeIn.Text.Length > 0) stegImage = new StegBitmap(textBoxEncodeIn.Text);
+            setFileSizeStatusLabelText();
+
         }
 
         private void buttonBrowseEncodeEmbed_Click(object sender, EventArgs e)
         {
             // set the path to read in a file to hide
             textBoxEncodeEmbed.Text = openFile("All Files (*.*)|*.*", Directory.GetCurrentDirectory());
+            setFileSizeStatusLabelText();
         }
 
         private void buttonBrowseEncodeOut_Click(object sender, EventArgs e)
@@ -87,7 +101,7 @@ namespace veil
         private void buttonEncode_Click(object sender, EventArgs e)
         {
             // try to read the image
-            stegImage = new StegBitmap(textBoxEncodeIn.Text);
+
             if (stegImage.createEncodedFile(textBoxEncodeEmbed.Text, textBoxEncodeOut.Text))
             {
                 Process.Start(Path.GetDirectoryName(textBoxEncodeOut.Text));
@@ -99,9 +113,27 @@ namespace veil
             textBoxEncodeIn.Text = "";
             textBoxEncodeOut.Text = "";
             textBoxEncodePass.Text = "";
+            toolStripStatusLabelFileSize.Text = " ";
+        }
+        #endregion
+
+        #region TextboxEvents
+        private void validateDecodeButton(object sender, EventArgs e)
+        {
+            // determine if the pushbutton can be clicked
+            if (textBoxDecodeOut.Text.Length > 0 && textBoxDecodePass.Text.Length > 0 && textBoxDecodeIn.Text.Length > 0) buttonDecode.Enabled = true;
+            else buttonDecode.Enabled = false;
         }
 
+        private void validateEncodeButton(object sender, EventArgs e)
+        {
+            // determine if the pushbutton can be clicked
+            if (textBoxEncodeOut.Text.Length > 0 && textBoxEncodePass.Text.Length > 0 && textBoxEncodeEmbed.Text.Length > 0 && textBoxEncodeIn.Text.Length > 0) buttonEncode.Enabled = true;
+            else buttonEncode.Enabled = false;
+        }
+        #endregion
 
+        #region FileDialogs
         private string openFile(string filter, string directory)
         {
             // open a file dialog asking for an input
@@ -139,7 +171,9 @@ namespace veil
             }
             return "";
         }
+        #endregion
 
+        #region Formatting
         private string getImageFileFilter()
         {
             // set up the filter with all image codecs
@@ -157,6 +191,20 @@ namespace veil
             filter = String.Format("{0}{1}{2} ({3})|{3}", filter, sep, "All Files", "*.*");
             return filter;
         }
-       
+
+        private void setFileSizeStatusLabelText()
+        {
+            string maxSize = @"N/A";
+            string embSize = @"N/A";
+            if (stegImage != null) maxSize = String.Format("{0:0.000}", (stegImage.maxHiddenFileSize() / 1024.0));
+            if (textBoxEncodeEmbed.Text.Length > 0 && File.Exists(textBoxEncodeEmbed.Text))
+            {
+                FileInfo fi = new FileInfo(textBoxEncodeEmbed.Text);
+                embSize = String.Format("{0:0.000}", (fi.Length / 1024.0));
+            }
+            toolStripStatusLabelFileSize.Text = String.Format("Max Embedded Size:  {0} kb  |  Embedded Size:  {1} kb", maxSize, embSize);
+        }
+        #endregion
+
     }
 }
