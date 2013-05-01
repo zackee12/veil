@@ -6,6 +6,7 @@ This is a steganography project I did in C awhile back.  I just started learning
 
 -Embed and recover any file into a lossless image file [file must be ~8 times smaller than the original image]
 -PNG, BMP, TIF files supported for embedding
+-LSB Steganography
 
 **Example
 
