@@ -1,21 +1,16 @@
 VEIL
 
-This is a steganography project I did in C awhile back.  I just started learning C# so I decided to port it over.
+C# steganography/steganalysis/cryptography
 
-**Current Features
+- Current Features
+	- Utilizes LSB steganography in lossless image formats to store files inside images (PNG, TIF)
+	- Allows data to be split up into multiple files
+	- Supports AES, Blowfish, DES, Mars, RC2, Rijndael, Serpent, TripleDES, and Twofish symmetric block ciphers
 
--Embed and recover any file into a lossless image file [file must be ~8 times smaller than the original image]
--PNG, BMP, TIF files supported for embedding
--LSB Steganography
-
-**Example
-
-This README file is embedded into StegImage.png.  The bitmap was read from OriginalImage.jpg.
-
-**Future Features
-
--AES
--Lossy image files
--Audio and Video Steganography
--Steganalysis
--Password Generator
+- Future Plans
+	- Other forms of steganography (Echo, BPCS, 
+	- Making hidden files more difficult to detect (like whitening)
+	- Detection of hidden files (steganalysis)
+	- Password generation
+	- More block ciphers
+	- Multi block ciphers encryption (AES - Twofish)

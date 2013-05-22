@@ -3,17 +3,34 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+
+/* 
+ * File Format [not encrypted]
+ * 4 bytes - remaining data size
+ * 16 bytes - file extension (null padded)
+ * x bytes - data
+ * 
+ * File Format [encrypted]
+ * 4 bytes - remaining data size
+ * 16 bytes - key validation encryption
+ * 16 bytes - crypto salt
+ * 16 bytes - crypto iv
+ * x bytes - encrypted data
+ */
+
 namespace veil
 {
     abstract class StegBase:IDisposable
     {
+        public const int HEADER_SIZE = 20; // size of the file information header
 
         #region MustInherit
-        // try to get the encoded file and return whether the function was successful or not
-        abstract public bool extractEncodedFile(string filepath);
 
-        // create the encoded file with the given filename embedded inside
-        abstract public bool createEncodedFile(string filenameHide, string filenameOutput);
+        // write bytes into the file
+        abstract public void EncodeBytes(byte[] hiddenBytes, string filenameOutput);
+
+        // read bytes from the file
+        abstract public byte[] DecodeBytes();
 
         // get the total number of bytes that the object has available for storing data
         abstract public long getNumBytes();
@@ -21,14 +38,12 @@ namespace veil
         // get the maximum size that can be stored in teh object
         abstract public long maxHiddenFileSize();
 
-        public virtual void Dispose()
-        {
-            // do nothing   
-        }
+        // do nothing this should be override
+        public virtual void Dispose(){}
         #endregion
 
         #region Conversions
-        protected byte[] integerToByteArray(int val)
+        public static byte[] integerToByteArray(int val)
         {
             // convert integer to a byte array
             byte[] intBytes = BitConverter.GetBytes(val);
@@ -36,7 +51,7 @@ namespace veil
             return intBytes;
         }
 
-        protected int byteArrayToInteger(byte[] b)
+        public static int byteArrayToInteger(byte[] b)
         {
             // convert byte array to an integer
             if (b.Length != sizeof(int)) throw new ArgumentException(String.Format("The byte array size was not correct for type integer.  Passed {0} bytes", b.Length));
@@ -46,6 +61,7 @@ namespace veil
         #endregion
 
         #region Validations
+
         public bool canFitFile(string filename)
         {
             // determine if the selected file can be hidden in the image
@@ -55,14 +71,14 @@ namespace veil
             return true;
         }
 
-        protected bool isByteOdd(byte b)
+        protected static bool isByteOdd(byte b)
         {
             // check if the byte is odd
             if (b % 2 == 1) return true;
             return false;
         }
 
-        protected bool isValidFileExtension(string ext)
+        public static bool isValidFileExtension(string ext)
         {
             // if the extension contains an invalid character return false
             string invalidFileNameChars = new string(System.IO.Path.GetInvalidFileNameChars());
@@ -73,7 +89,7 @@ namespace veil
             return true;
         }
 
-        protected string correctFilePath(string filepath)
+        public static string correctFilePath(string filepath)
         {
             // if the supplied directory doesn't work then use the current directory
             if (!Directory.Exists(filepath))
