@@ -37,6 +37,8 @@ namespace veil
             InitializeComponent();
         }
 
+
+        #region Steganography
         #region ControlEvents
 
         #region Buttons
@@ -133,15 +135,7 @@ namespace veil
 
         private void buttonOutBrowse_Click(object sender, EventArgs e)
         {
-            // open a folder browser
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-
-            // get the path to store the output file
-            if (fbd.ShowDialog() == DialogResult.OK)
-            {
-                textBoxOutPath.Text = fbd.SelectedPath;
-            }
-            fbd.Dispose();
+            textBoxOutPath.Text = openFolder();
         }
 
         private void buttonConcealBrowse_Click(object sender, EventArgs e)
@@ -283,8 +277,28 @@ namespace veil
                 // set the status label to the current mode
                 if (textBoxConceal.Enabled == true) toolStripStatusLabelMode.Text = "Encoding Mode";
                 else toolStripStatusLabelMode.Text = "Decoding Mode";
+                toolStripStatusLabelCarrierSize.Text = "|  Total Carrier Size:  0 kB";
+                toolStripStatusLabelConcealSize.Text = "|  Max Concealed Size:  0 kB";
             }
-            else toolStripStatusLabelMode.Text = "";
+            else if (tabControlMain.SelectedTab.Name == "tabPageCrypto")
+            {
+                if (groupBox_Crypto.Text.Equals("Encryption"))
+                {
+                    toolStripStatusLabelMode.Text = "Encryption Mode";
+                }
+                else
+                {
+                    toolStripStatusLabelMode.Text = "Decryption Mode";
+                }
+                toolStripStatusLabelCarrierSize.Text = "";
+                toolStripStatusLabelConcealSize.Text = "";
+            }
+            else
+            {
+                toolStripStatusLabelMode.Text = "";
+                toolStripStatusLabelCarrierSize.Text = "";
+                toolStripStatusLabelConcealSize.Text = "";
+            }
         }
 
         private void checkBoxPassword_CheckedChanged(object sender, EventArgs e)
@@ -310,6 +324,9 @@ namespace veil
         private void FormMainWindow_Load(object sender, EventArgs e)
         {
             textBoxOutPath.Text = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            ToolTip ttAddFiles = new System.Windows.Forms.ToolTip();
+            ttAddFiles.SetToolTip(this.listViewCarrier, "The order of files must be conserved when decoding.  The encoding output will be numbered");
+            ttAddFiles.SetToolTip(this.buttonCarrierBrowse, "The order of files must be conserved when decoding.  The encoding output will be numbered");
         }
         #endregion
 
@@ -333,11 +350,25 @@ namespace veil
 
         private void checkEncodeDecodeButtonEnable(object sender, EventArgs e)
         {
-            if (listViewCarrier.Items.Count > 0 && listviewItemsAreValid() && passwordItemIsValid() && textBoxOutPath.TextLength > 0 && Directory.Exists(textBoxOutPath.Text) && textBoxConceal.TextLength > 0 && File.Exists(textBoxConceal.Text))
+            // encode mode
+            if (textBoxConceal.Enabled == true)
             {
-                buttonGo.Enabled = true;
+                if (listviewItemsAreValid() && passwordItemIsValid() && Directory.Exists(textBoxOutPath.Text) && File.Exists(textBoxConceal.Text))
+                {
+                    buttonGo.Enabled = true;
+                }
+                else buttonGo.Enabled = false;
             }
-            else buttonGo.Enabled = false;
+            // decode mode
+            else
+            {
+                if (listviewItemsAreValid() && passwordItemIsValid()&& Directory.Exists(textBoxOutPath.Text))
+                {
+                    buttonGo.Enabled = true;
+                }
+                else buttonGo.Enabled = false;
+            }
+            
         }
 
         private bool listviewItemsAreValid()
@@ -357,6 +388,92 @@ namespace veil
             if (maskedTextBoxPassword.TextLength > 0) return true;
             return false;
         }
+        #endregion
+        #endregion
+
+
+        #region Steganalysis
+
+        #endregion
+
+        #region Cryptography
+        private void button_CryptoToggle_Click(object sender, EventArgs e)
+        {
+            if (groupBox_Crypto.Text.Equals("Encryption"))
+            {
+                groupBox_Crypto.Text = "Decryption";
+                toolStripStatusLabelMode.Text = "Decryption Mode";
+                button_CryptoGo.Text = "Decrypt";
+            }
+            else
+            {
+                groupBox_Crypto.Text = "Encryption";
+                toolStripStatusLabelMode.Text = "Encryption Mode";
+                button_CryptoGo.Text = "Encrypt";
+            }
+        }
+
+        private void button_CryptoGo_Click(object sender, EventArgs e)
+        {
+            ByteEncryption.SymmetricAlgorithmType alg = new ByteEncryption.SymmetricAlgorithmType();
+            if (radioButton_CryptoAES.Checked == true) alg = ByteEncryption.SymmetricAlgorithmType.AES;
+            else if (radioButton_CryptoBlowfish.Checked == true) alg = ByteEncryption.SymmetricAlgorithmType.Blowfish;
+            else if (radioButton_CryptoDES.Checked == true) alg = ByteEncryption.SymmetricAlgorithmType.DES;
+            else if (radioButton_CryptoMars.Checked == true) alg = ByteEncryption.SymmetricAlgorithmType.Mars;
+            else if (radioButton_CryptoRC2.Checked == true) alg = ByteEncryption.SymmetricAlgorithmType.RC2;
+            else if (radioButton_CryptoRijndael.Checked == true) alg = ByteEncryption.SymmetricAlgorithmType.Rijndael;
+            else if (radioButton_CryptoSerpent.Checked == true) alg = ByteEncryption.SymmetricAlgorithmType.Serpent;
+            else if (radioButton_Crypto3DES.Checked == true) alg = ByteEncryption.SymmetricAlgorithmType.TripleDES;
+            else if (radioButton_CryptoTwofish.Checked == true) alg = ByteEncryption.SymmetricAlgorithmType.Twofish;
+
+            if (groupBox_Crypto.Text.Equals("Encryption"))
+            {
+                try
+                {
+                    // encrypt the file and save to provide path
+                    ByteEncryption be = new ByteEncryption();
+                    byte[] encrypt = be.Encrypt(alg, maskedTextBox_CryptoPass.Text, File.ReadAllBytes(textBox_CryptoFile.Text));
+                    File.WriteAllBytes(textBox_CryptoOut.Text + @"\" + Path.GetFileName(textBox_CryptoFile.Text), encrypt);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+            else
+            {
+                try
+                {
+                    // decrypt the file and save to provided path
+                    ByteEncryption bd = new ByteEncryption();
+                    byte[] decrypt = bd.Decrypt(alg, maskedTextBox_CryptoPass.Text, File.ReadAllBytes(textBox_CryptoFile.Text));
+                    File.WriteAllBytes(textBox_CryptoOut.Text + @"\" + Path.GetFileName(textBox_CryptoFile.Text), decrypt);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+
+        }
+
+        private void button_CryptoFileBrowse_Click(object sender, EventArgs e)
+        {
+            textBox_CryptoFile.Text = openFile("All Files (*.*)|*.*", Directory.GetCurrentDirectory());
+        }
+
+        private void button_CryptoFolderBrowse_Click(object sender, EventArgs e)
+        {
+            textBox_CryptoOut.Text = openFolder();
+        }
+
+        private void check_Crypto_Go_Button(object sender, EventArgs e)
+        {
+            if (File.Exists(textBox_CryptoFile.Text) && Directory.Exists(textBox_CryptoOut.Text) && maskedTextBox_CryptoPass.TextLength > 0) button_CryptoGo.Enabled = true;
+            else button_CryptoGo.Enabled = false;
+        }
+
+
         #endregion
 
         #region FileIO
@@ -403,7 +520,23 @@ namespace veil
             ofd.Dispose();
             return null;
         }
+
+        private static string openFolder()
+        {
+            // open a folder browser
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+
+            // get the path to store the output file
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                return fbd.SelectedPath;
+            }
+
+            return "";
+        }
         #endregion
+
+        
 
     }
 }

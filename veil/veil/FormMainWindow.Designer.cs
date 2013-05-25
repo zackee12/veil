@@ -55,21 +55,49 @@
             this.buttonClear = new System.Windows.Forms.Button();
             this.buttonCarrierBrowse = new System.Windows.Forms.Button();
             this.textBoxConceal = new System.Windows.Forms.TextBox();
-            this.listViewCarrier = new veil.MonitoredListView();
             this.labelConceal = new System.Windows.Forms.Label();
             this.labelCarrier = new System.Windows.Forms.Label();
             this.buttonToggle = new System.Windows.Forms.Button();
             this.tabPageAnalysis = new System.Windows.Forms.TabPage();
+            this.tabPageCrypto = new System.Windows.Forms.TabPage();
+            this.groupBox_Crypto = new System.Windows.Forms.GroupBox();
+            this.button_CryptoFolderBrowse = new System.Windows.Forms.Button();
+            this.button_CryptoFileBrowse = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox_CryptoOut = new System.Windows.Forms.TextBox();
+            this.textBox_CryptoFile = new System.Windows.Forms.TextBox();
+            this.button_CryptoToggle = new System.Windows.Forms.Button();
+            this.button_CryptoGo = new System.Windows.Forms.Button();
+            this.groupBox_CryptoPass = new System.Windows.Forms.GroupBox();
+            this.button_CryptoGenPass = new System.Windows.Forms.Button();
+            this.maskedTextBox_CryptoPass = new System.Windows.Forms.MaskedTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox_CryptoCipher = new System.Windows.Forms.GroupBox();
+            this.radioButton_CryptoTwofish = new System.Windows.Forms.RadioButton();
+            this.radioButton_CryptoSerpent = new System.Windows.Forms.RadioButton();
+            this.radioButton_Crypto3DES = new System.Windows.Forms.RadioButton();
+            this.radioButton_CryptoRijndael = new System.Windows.Forms.RadioButton();
+            this.radioButton_CryptoRC2 = new System.Windows.Forms.RadioButton();
+            this.radioButton_CryptoMars = new System.Windows.Forms.RadioButton();
+            this.radioButton_CryptoDES = new System.Windows.Forms.RadioButton();
+            this.radioButton_CryptoBlowfish = new System.Windows.Forms.RadioButton();
+            this.radioButton_CryptoAES = new System.Windows.Forms.RadioButton();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelMode = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelCarrierSize = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelConcealSize = new System.Windows.Forms.ToolStripStatusLabel();
+            this.listViewCarrier = new veil.MonitoredListView();
             this.tabControlMain.SuspendLayout();
             this.tabPageSteg.SuspendLayout();
             this.groupBoxOutput.SuspendLayout();
             this.groupBoxInput.SuspendLayout();
             this.groupBoxPassword.SuspendLayout();
             this.groupBoxEncryption.SuspendLayout();
+            this.tabPageCrypto.SuspendLayout();
+            this.groupBox_Crypto.SuspendLayout();
+            this.groupBox_CryptoPass.SuspendLayout();
+            this.groupBox_CryptoCipher.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,6 +105,7 @@
             // 
             this.tabControlMain.Controls.Add(this.tabPageSteg);
             this.tabControlMain.Controls.Add(this.tabPageAnalysis);
+            this.tabControlMain.Controls.Add(this.tabPageCrypto);
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
             this.tabControlMain.Name = "tabControlMain";
@@ -392,23 +421,6 @@
             this.textBoxConceal.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBox_DragDrop);
             this.textBoxConceal.DragEnter += new System.Windows.Forms.DragEventHandler(this.textBox_DragEnter);
             // 
-            // listViewCarrier
-            // 
-            this.listViewCarrier.AllowDrop = true;
-            this.listViewCarrier.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listViewCarrier.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listViewCarrier.Location = new System.Drawing.Point(10, 19);
-            this.listViewCarrier.Name = "listViewCarrier";
-            this.listViewCarrier.Size = new System.Drawing.Size(368, 81);
-            this.listViewCarrier.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.listViewCarrier.TabIndex = 3;
-            this.listViewCarrier.UseCompatibleStateImageBehavior = false;
-            this.listViewCarrier.View = System.Windows.Forms.View.List;
-            this.listViewCarrier.ItemChanged += new veil.MonitoredListView.ItemChangedEventHandler(this.updateAndCheckFileSizes);
-            this.listViewCarrier.DragDrop += new System.Windows.Forms.DragEventHandler(this.listView_DragDrop);
-            this.listViewCarrier.DragEnter += new System.Windows.Forms.DragEventHandler(this.listView_DragEnter);
-            // 
             // labelConceal
             // 
             this.labelConceal.AutoSize = true;
@@ -449,6 +461,262 @@
             this.tabPageAnalysis.TabIndex = 1;
             this.tabPageAnalysis.Text = "Steganalysis";
             // 
+            // tabPageCrypto
+            // 
+            this.tabPageCrypto.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageCrypto.Controls.Add(this.groupBox_Crypto);
+            this.tabPageCrypto.Controls.Add(this.button_CryptoToggle);
+            this.tabPageCrypto.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCrypto.Name = "tabPageCrypto";
+            this.tabPageCrypto.Size = new System.Drawing.Size(479, 440);
+            this.tabPageCrypto.TabIndex = 2;
+            this.tabPageCrypto.Text = "Cryptography";
+            // 
+            // groupBox_Crypto
+            // 
+            this.groupBox_Crypto.Controls.Add(this.button_CryptoFolderBrowse);
+            this.groupBox_Crypto.Controls.Add(this.button_CryptoFileBrowse);
+            this.groupBox_Crypto.Controls.Add(this.label3);
+            this.groupBox_Crypto.Controls.Add(this.label2);
+            this.groupBox_Crypto.Controls.Add(this.textBox_CryptoOut);
+            this.groupBox_Crypto.Controls.Add(this.textBox_CryptoFile);
+            this.groupBox_Crypto.Controls.Add(this.button_CryptoGo);
+            this.groupBox_Crypto.Controls.Add(this.groupBox_CryptoPass);
+            this.groupBox_Crypto.Controls.Add(this.groupBox_CryptoCipher);
+            this.groupBox_Crypto.Location = new System.Drawing.Point(8, 32);
+            this.groupBox_Crypto.Name = "groupBox_Crypto";
+            this.groupBox_Crypto.Size = new System.Drawing.Size(463, 389);
+            this.groupBox_Crypto.TabIndex = 0;
+            this.groupBox_Crypto.TabStop = false;
+            this.groupBox_Crypto.Text = "Encryption";
+            // 
+            // button_CryptoFolderBrowse
+            // 
+            this.button_CryptoFolderBrowse.Location = new System.Drawing.Point(382, 87);
+            this.button_CryptoFolderBrowse.Name = "button_CryptoFolderBrowse";
+            this.button_CryptoFolderBrowse.Size = new System.Drawing.Size(75, 23);
+            this.button_CryptoFolderBrowse.TabIndex = 25;
+            this.button_CryptoFolderBrowse.Text = "Browse";
+            this.button_CryptoFolderBrowse.UseVisualStyleBackColor = true;
+            this.button_CryptoFolderBrowse.Click += new System.EventHandler(this.button_CryptoFolderBrowse_Click);
+            // 
+            // button_CryptoFileBrowse
+            // 
+            this.button_CryptoFileBrowse.Location = new System.Drawing.Point(382, 49);
+            this.button_CryptoFileBrowse.Name = "button_CryptoFileBrowse";
+            this.button_CryptoFileBrowse.Size = new System.Drawing.Size(75, 23);
+            this.button_CryptoFileBrowse.TabIndex = 24;
+            this.button_CryptoFileBrowse.Text = "Browse";
+            this.button_CryptoFileBrowse.UseVisualStyleBackColor = true;
+            this.button_CryptoFileBrowse.Click += new System.EventHandler(this.button_CryptoFileBrowse_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 113);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(64, 13);
+            this.label3.TabIndex = 23;
+            this.label3.Text = "Output Path";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 74);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(23, 13);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "File";
+            // 
+            // textBox_CryptoOut
+            // 
+            this.textBox_CryptoOut.Location = new System.Drawing.Point(6, 90);
+            this.textBox_CryptoOut.Name = "textBox_CryptoOut";
+            this.textBox_CryptoOut.Size = new System.Drawing.Size(370, 20);
+            this.textBox_CryptoOut.TabIndex = 21;
+            this.textBox_CryptoOut.TextChanged += new System.EventHandler(this.check_Crypto_Go_Button);
+            // 
+            // textBox_CryptoFile
+            // 
+            this.textBox_CryptoFile.Location = new System.Drawing.Point(6, 51);
+            this.textBox_CryptoFile.Name = "textBox_CryptoFile";
+            this.textBox_CryptoFile.Size = new System.Drawing.Size(370, 20);
+            this.textBox_CryptoFile.TabIndex = 20;
+            this.textBox_CryptoFile.TextChanged += new System.EventHandler(this.check_Crypto_Go_Button);
+            // 
+            // button_CryptoToggle
+            // 
+            this.button_CryptoToggle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_CryptoToggle.Location = new System.Drawing.Point(8, 3);
+            this.button_CryptoToggle.Name = "button_CryptoToggle";
+            this.button_CryptoToggle.Size = new System.Drawing.Size(468, 23);
+            this.button_CryptoToggle.TabIndex = 19;
+            this.button_CryptoToggle.Text = "Encrypt / Decrypt Toggle";
+            this.button_CryptoToggle.UseVisualStyleBackColor = true;
+            this.button_CryptoToggle.Click += new System.EventHandler(this.button_CryptoToggle_Click);
+            // 
+            // button_CryptoGo
+            // 
+            this.button_CryptoGo.Enabled = false;
+            this.button_CryptoGo.Location = new System.Drawing.Point(6, 360);
+            this.button_CryptoGo.Name = "button_CryptoGo";
+            this.button_CryptoGo.Size = new System.Drawing.Size(448, 23);
+            this.button_CryptoGo.TabIndex = 18;
+            this.button_CryptoGo.Text = "Encrypt";
+            this.button_CryptoGo.UseVisualStyleBackColor = true;
+            this.button_CryptoGo.Click += new System.EventHandler(this.button_CryptoGo_Click);
+            // 
+            // groupBox_CryptoPass
+            // 
+            this.groupBox_CryptoPass.Controls.Add(this.button_CryptoGenPass);
+            this.groupBox_CryptoPass.Controls.Add(this.maskedTextBox_CryptoPass);
+            this.groupBox_CryptoPass.Controls.Add(this.label1);
+            this.groupBox_CryptoPass.Location = new System.Drawing.Point(6, 149);
+            this.groupBox_CryptoPass.Name = "groupBox_CryptoPass";
+            this.groupBox_CryptoPass.Size = new System.Drawing.Size(190, 108);
+            this.groupBox_CryptoPass.TabIndex = 17;
+            this.groupBox_CryptoPass.TabStop = false;
+            this.groupBox_CryptoPass.Text = "Password Protection";
+            // 
+            // button_CryptoGenPass
+            // 
+            this.button_CryptoGenPass.Location = new System.Drawing.Point(3, 76);
+            this.button_CryptoGenPass.Name = "button_CryptoGenPass";
+            this.button_CryptoGenPass.Size = new System.Drawing.Size(75, 23);
+            this.button_CryptoGenPass.TabIndex = 14;
+            this.button_CryptoGenPass.Text = "Generate";
+            this.button_CryptoGenPass.UseVisualStyleBackColor = true;
+            // 
+            // maskedTextBox_CryptoPass
+            // 
+            this.maskedTextBox_CryptoPass.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.maskedTextBox_CryptoPass.Location = new System.Drawing.Point(4, 37);
+            this.maskedTextBox_CryptoPass.Name = "maskedTextBox_CryptoPass";
+            this.maskedTextBox_CryptoPass.PasswordChar = '*';
+            this.maskedTextBox_CryptoPass.Size = new System.Drawing.Size(180, 20);
+            this.maskedTextBox_CryptoPass.TabIndex = 10;
+            this.maskedTextBox_CryptoPass.TextChanged += new System.EventHandler(this.check_Crypto_Go_Button);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(1, 60);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Password";
+            // 
+            // groupBox_CryptoCipher
+            // 
+            this.groupBox_CryptoCipher.Controls.Add(this.radioButton_CryptoTwofish);
+            this.groupBox_CryptoCipher.Controls.Add(this.radioButton_CryptoSerpent);
+            this.groupBox_CryptoCipher.Controls.Add(this.radioButton_Crypto3DES);
+            this.groupBox_CryptoCipher.Controls.Add(this.radioButton_CryptoRijndael);
+            this.groupBox_CryptoCipher.Controls.Add(this.radioButton_CryptoRC2);
+            this.groupBox_CryptoCipher.Controls.Add(this.radioButton_CryptoMars);
+            this.groupBox_CryptoCipher.Controls.Add(this.radioButton_CryptoDES);
+            this.groupBox_CryptoCipher.Controls.Add(this.radioButton_CryptoBlowfish);
+            this.groupBox_CryptoCipher.Controls.Add(this.radioButton_CryptoAES);
+            this.groupBox_CryptoCipher.Location = new System.Drawing.Point(202, 149);
+            this.groupBox_CryptoCipher.Name = "groupBox_CryptoCipher";
+            this.groupBox_CryptoCipher.Size = new System.Drawing.Size(257, 108);
+            this.groupBox_CryptoCipher.TabIndex = 16;
+            this.groupBox_CryptoCipher.TabStop = false;
+            this.groupBox_CryptoCipher.Text = "Encryption";
+            // 
+            // radioButton_CryptoTwofish
+            // 
+            this.radioButton_CryptoTwofish.AutoSize = true;
+            this.radioButton_CryptoTwofish.Location = new System.Drawing.Point(182, 19);
+            this.radioButton_CryptoTwofish.Name = "radioButton_CryptoTwofish";
+            this.radioButton_CryptoTwofish.Size = new System.Drawing.Size(62, 17);
+            this.radioButton_CryptoTwofish.TabIndex = 20;
+            this.radioButton_CryptoTwofish.Text = "Twofish";
+            this.radioButton_CryptoTwofish.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_CryptoSerpent
+            // 
+            this.radioButton_CryptoSerpent.AutoSize = true;
+            this.radioButton_CryptoSerpent.Location = new System.Drawing.Point(90, 65);
+            this.radioButton_CryptoSerpent.Name = "radioButton_CryptoSerpent";
+            this.radioButton_CryptoSerpent.Size = new System.Drawing.Size(62, 17);
+            this.radioButton_CryptoSerpent.TabIndex = 19;
+            this.radioButton_CryptoSerpent.Text = "Serpent";
+            this.radioButton_CryptoSerpent.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_Crypto3DES
+            // 
+            this.radioButton_Crypto3DES.AutoSize = true;
+            this.radioButton_Crypto3DES.Location = new System.Drawing.Point(90, 88);
+            this.radioButton_Crypto3DES.Name = "radioButton_Crypto3DES";
+            this.radioButton_Crypto3DES.Size = new System.Drawing.Size(73, 17);
+            this.radioButton_Crypto3DES.TabIndex = 18;
+            this.radioButton_Crypto3DES.Text = "TripleDES";
+            this.radioButton_Crypto3DES.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_CryptoRijndael
+            // 
+            this.radioButton_CryptoRijndael.AutoSize = true;
+            this.radioButton_CryptoRijndael.Location = new System.Drawing.Point(90, 42);
+            this.radioButton_CryptoRijndael.Name = "radioButton_CryptoRijndael";
+            this.radioButton_CryptoRijndael.Size = new System.Drawing.Size(63, 17);
+            this.radioButton_CryptoRijndael.TabIndex = 17;
+            this.radioButton_CryptoRijndael.Text = "Rijndael";
+            this.radioButton_CryptoRijndael.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_CryptoRC2
+            // 
+            this.radioButton_CryptoRC2.AutoSize = true;
+            this.radioButton_CryptoRC2.Location = new System.Drawing.Point(91, 19);
+            this.radioButton_CryptoRC2.Name = "radioButton_CryptoRC2";
+            this.radioButton_CryptoRC2.Size = new System.Drawing.Size(46, 17);
+            this.radioButton_CryptoRC2.TabIndex = 16;
+            this.radioButton_CryptoRC2.Text = "RC2";
+            this.radioButton_CryptoRC2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_CryptoMars
+            // 
+            this.radioButton_CryptoMars.AutoSize = true;
+            this.radioButton_CryptoMars.Location = new System.Drawing.Point(6, 88);
+            this.radioButton_CryptoMars.Name = "radioButton_CryptoMars";
+            this.radioButton_CryptoMars.Size = new System.Drawing.Size(48, 17);
+            this.radioButton_CryptoMars.TabIndex = 15;
+            this.radioButton_CryptoMars.Text = "Mars";
+            this.radioButton_CryptoMars.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_CryptoDES
+            // 
+            this.radioButton_CryptoDES.AutoSize = true;
+            this.radioButton_CryptoDES.Location = new System.Drawing.Point(6, 65);
+            this.radioButton_CryptoDES.Name = "radioButton_CryptoDES";
+            this.radioButton_CryptoDES.Size = new System.Drawing.Size(47, 17);
+            this.radioButton_CryptoDES.TabIndex = 14;
+            this.radioButton_CryptoDES.Text = "DES";
+            this.radioButton_CryptoDES.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_CryptoBlowfish
+            // 
+            this.radioButton_CryptoBlowfish.AutoSize = true;
+            this.radioButton_CryptoBlowfish.Location = new System.Drawing.Point(6, 42);
+            this.radioButton_CryptoBlowfish.Name = "radioButton_CryptoBlowfish";
+            this.radioButton_CryptoBlowfish.Size = new System.Drawing.Size(64, 17);
+            this.radioButton_CryptoBlowfish.TabIndex = 13;
+            this.radioButton_CryptoBlowfish.Text = "Blowfish";
+            this.radioButton_CryptoBlowfish.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_CryptoAES
+            // 
+            this.radioButton_CryptoAES.AutoSize = true;
+            this.radioButton_CryptoAES.Checked = true;
+            this.radioButton_CryptoAES.Location = new System.Drawing.Point(6, 19);
+            this.radioButton_CryptoAES.Name = "radioButton_CryptoAES";
+            this.radioButton_CryptoAES.Size = new System.Drawing.Size(46, 17);
+            this.radioButton_CryptoAES.TabIndex = 12;
+            this.radioButton_CryptoAES.TabStop = true;
+            this.radioButton_CryptoAES.Text = "AES";
+            this.radioButton_CryptoAES.UseVisualStyleBackColor = true;
+            // 
             // statusStripMain
             // 
             this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -481,6 +749,22 @@
             this.toolStripStatusLabelConcealSize.Size = new System.Drawing.Size(151, 15);
             this.toolStripStatusLabelConcealSize.Text = "|  Max Concealed Size:  0 kB";
             // 
+            // listViewCarrier
+            // 
+            this.listViewCarrier.AllowDrop = true;
+            this.listViewCarrier.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewCarrier.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listViewCarrier.Location = new System.Drawing.Point(10, 19);
+            this.listViewCarrier.Name = "listViewCarrier";
+            this.listViewCarrier.Size = new System.Drawing.Size(368, 81);
+            this.listViewCarrier.TabIndex = 3;
+            this.listViewCarrier.UseCompatibleStateImageBehavior = false;
+            this.listViewCarrier.View = System.Windows.Forms.View.List;
+            this.listViewCarrier.ItemChanged += new veil.MonitoredListView.ItemChangedEventHandler(this.updateAndCheckFileSizes);
+            this.listViewCarrier.DragDrop += new System.Windows.Forms.DragEventHandler(this.listView_DragDrop);
+            this.listViewCarrier.DragEnter += new System.Windows.Forms.DragEventHandler(this.listView_DragEnter);
+            // 
             // FormMainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -502,6 +786,13 @@
             this.groupBoxPassword.PerformLayout();
             this.groupBoxEncryption.ResumeLayout(false);
             this.groupBoxEncryption.PerformLayout();
+            this.tabPageCrypto.ResumeLayout(false);
+            this.groupBox_Crypto.ResumeLayout(false);
+            this.groupBox_Crypto.PerformLayout();
+            this.groupBox_CryptoPass.ResumeLayout(false);
+            this.groupBox_CryptoPass.PerformLayout();
+            this.groupBox_CryptoCipher.ResumeLayout(false);
+            this.groupBox_CryptoCipher.PerformLayout();
             this.statusStripMain.ResumeLayout(false);
             this.statusStripMain.PerformLayout();
             this.ResumeLayout(false);
@@ -547,5 +838,29 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelCarrierSize;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelConcealSize;
         private System.Windows.Forms.Button buttonGo;
+        private System.Windows.Forms.TabPage tabPageCrypto;
+        private System.Windows.Forms.GroupBox groupBox_Crypto;
+        private System.Windows.Forms.Button button_CryptoFolderBrowse;
+        private System.Windows.Forms.Button button_CryptoFileBrowse;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox_CryptoOut;
+        private System.Windows.Forms.TextBox textBox_CryptoFile;
+        private System.Windows.Forms.Button button_CryptoToggle;
+        private System.Windows.Forms.Button button_CryptoGo;
+        private System.Windows.Forms.GroupBox groupBox_CryptoPass;
+        private System.Windows.Forms.Button button_CryptoGenPass;
+        private System.Windows.Forms.MaskedTextBox maskedTextBox_CryptoPass;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox_CryptoCipher;
+        private System.Windows.Forms.RadioButton radioButton_CryptoTwofish;
+        private System.Windows.Forms.RadioButton radioButton_CryptoSerpent;
+        private System.Windows.Forms.RadioButton radioButton_Crypto3DES;
+        private System.Windows.Forms.RadioButton radioButton_CryptoRijndael;
+        private System.Windows.Forms.RadioButton radioButton_CryptoRC2;
+        private System.Windows.Forms.RadioButton radioButton_CryptoMars;
+        private System.Windows.Forms.RadioButton radioButton_CryptoDES;
+        private System.Windows.Forms.RadioButton radioButton_CryptoBlowfish;
+        private System.Windows.Forms.RadioButton radioButton_CryptoAES;
     }
 }
