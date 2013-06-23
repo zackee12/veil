@@ -61,11 +61,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ByteEncryption.cs" />
+    <Compile Include="CryptoRandom.cs" />
     <Compile Include="FormMainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormMainWindow.Designer.cs">
       <DependentUpon>FormMainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormPasswordGenerator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPasswordGenerator.Designer.cs">
+      <DependentUpon>FormPasswordGenerator.cs</DependentUpon>
     </Compile>
     <Compile Include="MonitoredListView.cs">
       <SubType>Component</SubType>
@@ -83,6 +90,9 @@
     <Compile Include="SymmetricAlgorithm\Utilities\SymmetricTransform.cs" />
     <EmbeddedResource Include="FormMainWindow.resx">
       <DependentUpon>FormMainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPasswordGenerator.resx">
+      <DependentUpon>FormPasswordGenerator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -122,6 +132,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="word_list.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

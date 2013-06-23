@@ -536,6 +536,12 @@ namespace veil
         }
         #endregion
 
+        private void buttonPassword_Click(object sender, EventArgs e)
+        {
+            FormPasswordGenerator fpg = new FormPasswordGenerator(this.maskedTextBoxPassword);
+            fpg.Show();
+        }
+
         
 
     }

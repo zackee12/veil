@@ -128,7 +128,7 @@ namespace veil
             this.key = alg.Key;
             //System.Windows.Forms.MessageBox.Show("Key " + BitConverter.ToString(alg.Key) + "  IV " + BitConverter.ToString(alg.IV) + "  salt " + BitConverter.ToString(salt));
             // generate the validation with the key to check for the correct key
-            byte[] validationTest = EncryptBytes(alg, Encoding.ASCII.GetBytes(VALIDATION_PHRASE));
+            byte[] validationTest = EncryptBytes(alg, Encoding.Unicode.GetBytes(VALIDATION_PHRASE));
             if (!ByteArraysEqual(validation, validationTest)) throw new ArgumentException("Password is incorrect");
             byte[] data = new byte[ciphertext.Length - this.salt.Length - this.iv.Length - validation.Length];
             Array.Copy(ciphertext, this.salt.Length + this.iv.Length + validation.Length, data, 0, data.Length);
@@ -185,7 +185,7 @@ namespace veil
             this.salt = salt;
             this.iv = alg.IV;
             // generate the key validation byte array
-            byte[] validation = EncryptBytes(alg, Encoding.ASCII.GetBytes(VALIDATION_PHRASE));
+            byte[] validation = EncryptBytes(alg, Encoding.Unicode.GetBytes(VALIDATION_PHRASE));
             List<byte> list = new List<byte>();
             list.AddRange(validation);
             list.AddRange(this.salt);

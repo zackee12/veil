@@ -55,6 +55,7 @@
             this.buttonClear = new System.Windows.Forms.Button();
             this.buttonCarrierBrowse = new System.Windows.Forms.Button();
             this.textBoxConceal = new System.Windows.Forms.TextBox();
+            this.listViewCarrier = new veil.MonitoredListView();
             this.labelConceal = new System.Windows.Forms.Label();
             this.labelCarrier = new System.Windows.Forms.Label();
             this.buttonToggle = new System.Windows.Forms.Button();
@@ -67,7 +68,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox_CryptoOut = new System.Windows.Forms.TextBox();
             this.textBox_CryptoFile = new System.Windows.Forms.TextBox();
-            this.button_CryptoToggle = new System.Windows.Forms.Button();
             this.button_CryptoGo = new System.Windows.Forms.Button();
             this.groupBox_CryptoPass = new System.Windows.Forms.GroupBox();
             this.button_CryptoGenPass = new System.Windows.Forms.Button();
@@ -83,11 +83,11 @@
             this.radioButton_CryptoDES = new System.Windows.Forms.RadioButton();
             this.radioButton_CryptoBlowfish = new System.Windows.Forms.RadioButton();
             this.radioButton_CryptoAES = new System.Windows.Forms.RadioButton();
+            this.button_CryptoToggle = new System.Windows.Forms.Button();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelMode = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelCarrierSize = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelConcealSize = new System.Windows.Forms.ToolStripStatusLabel();
-            this.listViewCarrier = new veil.MonitoredListView();
             this.tabControlMain.SuspendLayout();
             this.tabPageSteg.SuspendLayout();
             this.groupBoxOutput.SuspendLayout();
@@ -233,6 +233,7 @@
             this.buttonPassword.TabIndex = 14;
             this.buttonPassword.Text = "Generate";
             this.buttonPassword.UseVisualStyleBackColor = true;
+            this.buttonPassword.Click += new System.EventHandler(this.buttonPassword_Click);
             // 
             // maskedTextBoxPassword
             // 
@@ -421,6 +422,22 @@
             this.textBoxConceal.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBox_DragDrop);
             this.textBoxConceal.DragEnter += new System.Windows.Forms.DragEventHandler(this.textBox_DragEnter);
             // 
+            // listViewCarrier
+            // 
+            this.listViewCarrier.AllowDrop = true;
+            this.listViewCarrier.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewCarrier.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listViewCarrier.Location = new System.Drawing.Point(10, 19);
+            this.listViewCarrier.Name = "listViewCarrier";
+            this.listViewCarrier.Size = new System.Drawing.Size(368, 81);
+            this.listViewCarrier.TabIndex = 3;
+            this.listViewCarrier.UseCompatibleStateImageBehavior = false;
+            this.listViewCarrier.View = System.Windows.Forms.View.List;
+            this.listViewCarrier.ItemChanged += new veil.MonitoredListView.ItemChangedEventHandler(this.updateAndCheckFileSizes);
+            this.listViewCarrier.DragDrop += new System.Windows.Forms.DragEventHandler(this.listView_DragDrop);
+            this.listViewCarrier.DragEnter += new System.Windows.Forms.DragEventHandler(this.listView_DragEnter);
+            // 
             // labelConceal
             // 
             this.labelConceal.AutoSize = true;
@@ -543,18 +560,6 @@
             this.textBox_CryptoFile.Size = new System.Drawing.Size(370, 20);
             this.textBox_CryptoFile.TabIndex = 20;
             this.textBox_CryptoFile.TextChanged += new System.EventHandler(this.check_Crypto_Go_Button);
-            // 
-            // button_CryptoToggle
-            // 
-            this.button_CryptoToggle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_CryptoToggle.Location = new System.Drawing.Point(8, 3);
-            this.button_CryptoToggle.Name = "button_CryptoToggle";
-            this.button_CryptoToggle.Size = new System.Drawing.Size(468, 23);
-            this.button_CryptoToggle.TabIndex = 19;
-            this.button_CryptoToggle.Text = "Encrypt / Decrypt Toggle";
-            this.button_CryptoToggle.UseVisualStyleBackColor = true;
-            this.button_CryptoToggle.Click += new System.EventHandler(this.button_CryptoToggle_Click);
             // 
             // button_CryptoGo
             // 
@@ -717,6 +722,18 @@
             this.radioButton_CryptoAES.Text = "AES";
             this.radioButton_CryptoAES.UseVisualStyleBackColor = true;
             // 
+            // button_CryptoToggle
+            // 
+            this.button_CryptoToggle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_CryptoToggle.Location = new System.Drawing.Point(8, 3);
+            this.button_CryptoToggle.Name = "button_CryptoToggle";
+            this.button_CryptoToggle.Size = new System.Drawing.Size(468, 23);
+            this.button_CryptoToggle.TabIndex = 19;
+            this.button_CryptoToggle.Text = "Encrypt / Decrypt Toggle";
+            this.button_CryptoToggle.UseVisualStyleBackColor = true;
+            this.button_CryptoToggle.Click += new System.EventHandler(this.button_CryptoToggle_Click);
+            // 
             // statusStripMain
             // 
             this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -748,22 +765,6 @@
             this.toolStripStatusLabelConcealSize.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripStatusLabelConcealSize.Size = new System.Drawing.Size(151, 15);
             this.toolStripStatusLabelConcealSize.Text = "|  Max Concealed Size:  0 kB";
-            // 
-            // listViewCarrier
-            // 
-            this.listViewCarrier.AllowDrop = true;
-            this.listViewCarrier.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listViewCarrier.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listViewCarrier.Location = new System.Drawing.Point(10, 19);
-            this.listViewCarrier.Name = "listViewCarrier";
-            this.listViewCarrier.Size = new System.Drawing.Size(368, 81);
-            this.listViewCarrier.TabIndex = 3;
-            this.listViewCarrier.UseCompatibleStateImageBehavior = false;
-            this.listViewCarrier.View = System.Windows.Forms.View.List;
-            this.listViewCarrier.ItemChanged += new veil.MonitoredListView.ItemChangedEventHandler(this.updateAndCheckFileSizes);
-            this.listViewCarrier.DragDrop += new System.Windows.Forms.DragEventHandler(this.listView_DragDrop);
-            this.listViewCarrier.DragEnter += new System.Windows.Forms.DragEventHandler(this.listView_DragEnter);
             // 
             // FormMainWindow
             // 
