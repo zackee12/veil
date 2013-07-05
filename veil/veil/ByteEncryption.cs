@@ -49,7 +49,7 @@ namespace veil
         }
 
         private const int ITERATIONS = 10000;
-        private const string VALIDATION_PHRASE = "123456789012345";
+        private const string VALIDATION_PHRASE = "1234567";
         private const int SALT_SIZE = 16;
 
         public ByteEncryption()
@@ -115,7 +115,7 @@ namespace veil
         private byte[] DecryptionSetup(SymmetricAlgorithm alg,  string password, byte[] ciphertext)
         {
             // [validation] [salt] [iv] [data]
-            byte[] validation = new byte[VALIDATION_PHRASE.Length+1];
+            byte[] validation = new byte[16];
             this.salt = new byte[SALT_SIZE];
             this.iv = new byte[alg.LegalBlockSizes[0].MinSize / 8];
             // fetch the validation phrase, salt and iv from the ciphertext
